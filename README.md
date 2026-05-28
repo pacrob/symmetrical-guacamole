@@ -96,3 +96,26 @@ make check      # lint + test (pre-commit gate)
 ```
 
 Tests use a fake chat model — no API key required to run the suite.
+
+## Roadmap
+
+Tracked against the project's functional requirements. `[x]` done, `[~]` partial, `[ ]` not started.
+
+### Must (defines done)
+
+- [x] **FR-1** — Accept a single email from a local source. ([`MboxSource`](src/email_classifier/ingest/mbox.py), JSONL via [scripts/test_ingest.py](scripts/test_ingest.py))
+- [x] **FR-2** — Classify into exactly one category. `EmailLabel` `Literal` + `with_structured_output` enforce the set.
+- [ ] **FR-3** — Assign a priority (`low` / `normal` / `urgent`). Add `priority: PriorityLevel` to `Classification` and a matching `PriorityLevel = Literal[...]` in [models.py](src/email_classifier/models.py); update the system prompt.
+- [~] **FR-4** — One-to-two sentence rationale. `reasoning` field exists; widen its description and the prompt from "one-sentence" to "one to two".
+- [~] **FR-5** — Emit results as structured JSON with a stable schema. The `Classification` pydantic model *is* the schema; [scripts/test_ingest.py](scripts/test_ingest.py) currently pretty-prints. Add a `--json` flag that emits `Classification.model_dump_json()` per line.
+- [x] **FR-6** — Process a batch from a file in one run. (JSONL script iterates the file.)
+
+### Should (expected if time allows)
+
+- [x] **FR-7** — Junk / ambiguous bucket. `other / unclear` exists in `EmailLabel`; structured output guarantees the LLM can always pick a valid value.
+- [ ] **FR-8** — Flag low-confidence decisions for human review. Add a `review_threshold: float` to `Settings`; either set `needs_review: bool` on the classification or filter into a separate review stream at the script boundary.
+
+### Could (nice to have)
+
+- [ ] **FR-9** — Configurable categories without code changes. Move labels + descriptions into a config file (e.g. `labels.yaml`) and load them at startup. Note the tradeoff: dropping the `Literal` type loses static narrowing (mypy / IDE autocomplete) in exchange for runtime configurability — likely worth a small `StrEnum`-or-set-based validator pattern instead.
+- [ ] **FR-10** — Suggest a one-line draft reply for routine categories. Adds a second graph node (`draft_node`) that runs conditionally (e.g. only for `question / support` with confidence ≥ threshold), and a `draft: str | None` field on the output. First real use of LangGraph's conditional edges.
