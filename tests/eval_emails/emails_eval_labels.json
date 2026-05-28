@@ -1,0 +1,52 @@
+{
+  "eval-001": {
+    "category": "action_needed",
+    "priority": "urgent",
+    "rationale": "Explicit ask with same-day deadline and material business consequence (slipped billing)."
+  },
+  "eval-002": {
+    "category": "bug_report",
+    "priority": "urgent",
+    "rationale": "Production outage with 100% error rate; clear bug signal and active impact."
+  },
+  "eval-003": {
+    "category": "question",
+    "priority": "normal",
+    "rationale": "Routine how-to question from a user; no urgency, no incident."
+  },
+  "eval-004": {
+    "category": "fyi",
+    "priority": "low",
+    "rationale": "Informational broadcast; explicit 'no action needed' with an opt-out option."
+  },
+  "eval-005": {
+    "category": "vendor_spam",
+    "priority": "low",
+    "rationale": "Unsolicited marketing pitch with discount and unsubscribe footer; classic vendor blast."
+  },
+  "eval-006": {
+    "category": "other",
+    "priority": "low",
+    "rationale": "Conversational ack with no clear ask, bug, or info; doesn't fit a substantive bucket."
+  },
+  "eval-007": {
+    "category": "bug_report",
+    "priority": "normal",
+    "rationale": "Customer reporting reproducible defect with timing and rate; not an outage but a real bug."
+  },
+  "eval-008": {
+    "category": "action_needed",
+    "priority": "normal",
+    "rationale": "Explicit deliverable with a one-week deadline; routine planning ask, not an emergency."
+  },
+  "eval-009": {
+    "category": "vendor_spam",
+    "priority": "low",
+    "rationale": "Bulk event promotion with sponsor list; not personalized, no action expected from us."
+  },
+  "eval-010": {
+    "category": "other",
+    "priority": "low",
+    "rationale": "Vague, anonymous, no actionable content; ambiguous by design and should be flagged for human review."
+  }
+}
