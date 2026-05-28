@@ -106,8 +106,8 @@ Tracked against the project's functional requirements. `[x]` done, `[~]` partial
 - [x] **FR-1** — Accept a single email from a local source. ([`MboxSource`](src/email_classifier/ingest/mbox.py), JSONL via [scripts/test_ingest.py](scripts/test_ingest.py))
 - [x] **FR-2** — Classify into exactly one category. `EmailLabel` `Literal` + `with_structured_output` enforce the set.
 - [ ] **FR-3** — Assign a priority (`low` / `normal` / `urgent`). Add `priority: PriorityLevel` to `Classification` and a matching `PriorityLevel = Literal[...]` in [models.py](src/email_classifier/models.py); update the system prompt.
-- [~] **FR-4** — One-to-two sentence rationale. `reasoning` field exists; widen its description and the prompt from "one-sentence" to "one to two".
-- [~] **FR-5** — Emit results as structured JSON with a stable schema. The `Classification` pydantic model *is* the schema; [scripts/test_ingest.py](scripts/test_ingest.py) currently pretty-prints. Add a `--json` flag that emits `Classification.model_dump_json()` per line.
+- [ ] **FR-4** — One-to-two sentence rationale. `reasoning` field exists; widen its description and the prompt from "one-sentence" to "one to two".
+- [ ] **FR-5** — Emit results as structured JSON with a stable schema. The `Classification` pydantic model *is* the schema; [scripts/test_ingest.py](scripts/test_ingest.py) currently pretty-prints. Add a `--json` flag that emits `Classification.model_dump_json()` per line.
 - [x] **FR-6** — Process a batch from a file in one run. (JSONL script iterates the file.)
 
 ### Should (expected if time allows)
