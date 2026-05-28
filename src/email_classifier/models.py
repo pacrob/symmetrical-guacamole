@@ -5,12 +5,10 @@ from pydantic import BaseModel, Field
 
 
 class Email(BaseModel):
-    message_id: str
+    id: str
     sender: str
-    recipients: list[str] = Field(default_factory=list)
     subject: str = ""
     body: str = ""
-    received_at: datetime | None = None
 
 
 EmailLabel = Literal[
