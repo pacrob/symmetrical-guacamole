@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv *)",
+      "Bash(pytest*)",
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(rg *)"
+    ],
+    "deny": [
+      "Bash(git push*)",
+      "Bash(rm -rf /*)"
+    ]
+  }
+}
