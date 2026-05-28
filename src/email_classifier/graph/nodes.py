@@ -1,14 +1,17 @@
-from typing import Callable
+from collections.abc import Callable
+from typing import get_args
 
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 
-from ..models import Classification
+from ..models import Classification, EmailLabel
 from .state import AgentState
+
+LABELS = get_args(EmailLabel)
 
 SYSTEM_PROMPT = (
     "You are an email triage assistant. Read the email and assign a short "
-    "category label (e.g. work, personal, newsletter, spam, transactional). "
+    f"category label (MUST BE one of: {', '.join(LABELS)}). "
     "Return your confidence as a number between 0 and 1 and a one-sentence reason."
 )
 
@@ -18,11 +21,7 @@ def make_classify_node(model: BaseChatModel) -> Callable[[AgentState], dict]:
 
     def classify_node(state: AgentState) -> dict:
         email = state["email"]
-        content = (
-            f"Subject: {email.subject}\n"
-            f"From: {email.sender}\n\n"
-            f"{email.body}"
-        )
+        content = f"Subject: {email.subject}\nFrom: {email.sender}\n\n{email.body}"
         result = structured.invoke(
             [
                 SystemMessage(content=SYSTEM_PROMPT),

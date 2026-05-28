@@ -1,5 +1,5 @@
 import mailbox
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from email.message import EmailMessage
 from pathlib import Path
 
@@ -54,7 +54,7 @@ def test_fetch_yields_email_per_message(tmp_path: Path) -> None:
     assert [e.subject for e in emails] == ["one", "two"]
     assert emails[0].sender == "alice@example.com"
     assert emails[0].body.strip() == "hello"
-    assert emails[0].received_at == datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
+    assert emails[0].received_at == datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC)
 
 
 def test_to_email_strips_message_id_brackets() -> None:

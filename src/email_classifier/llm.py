@@ -1,15 +1,19 @@
-import os
-
 from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 
 # from langchain_anthropic import ChatAnthropic
-
-DEFAULT_MODEL = "gpt-4o-mini"
-# DEFAULT_MODEL = "claude-haiku-4-5"
+from .config import Settings, get_settings
 
 
-def get_chat_model(model: str | None = None) -> BaseChatModel:
-    name = model or os.environ.get("LLM_MODEL", DEFAULT_MODEL)
-    return ChatOpenAI(model=name, temperature=0)
-    # return ChatAnthropic(model=name, temperature=0)
+def get_chat_model(settings: Settings | None = None) -> BaseChatModel:
+    s = settings or get_settings()
+    return ChatOpenAI(
+        model=s.llm_model,
+        temperature=0,
+        api_key=s.openai_api_key,
+    )
+    # return ChatAnthropic(
+    #     model=s.llm_model,
+    #     temperature=0,
+    #     api_key=s.anthropic_api_key,
+    # )

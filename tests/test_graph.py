@@ -37,7 +37,7 @@ def _email(**overrides: Any) -> Email:
 
 
 def test_classify_node_returns_classification_update() -> None:
-    expected = Classification(label="personal", confidence=0.9, reasoning="lunch invite")
+    expected = Classification(label="FYI / no action", confidence=0.9, reasoning="lunch invite")
     model = _FakeModel(expected)
     node = make_classify_node(model)  # type: ignore[arg-type]
 
@@ -47,7 +47,7 @@ def test_classify_node_returns_classification_update() -> None:
 
 
 def test_classify_node_prompts_with_email_content() -> None:
-    model = _FakeModel(Classification(label="x", confidence=0.0))
+    model = _FakeModel(Classification(label="other / unclear", confidence=0.0))
     node = make_classify_node(model)  # type: ignore[arg-type]
 
     node(
@@ -71,7 +71,7 @@ def test_classify_node_prompts_with_email_content() -> None:
 
 
 def test_build_graph_runs_classify_end_to_end() -> None:
-    expected = Classification(label="newsletter", confidence=0.7, reasoning="bulk send")
+    expected = Classification(label="vendor / spam", confidence=0.7, reasoning="bulk send")
     graph = build_graph(_FakeModel(expected))  # type: ignore[arg-type]
 
     result = graph.invoke({"email": _email()})

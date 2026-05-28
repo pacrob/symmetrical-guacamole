@@ -1,9 +1,9 @@
 import mailbox
+from collections.abc import Iterator
 from datetime import datetime
 from email.message import Message
 from email.utils import getaddresses, parsedate_to_datetime
 from pathlib import Path
-from typing import Iterator
 
 from ..models import Email
 
