@@ -4,14 +4,18 @@ from typing import get_args
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 
-from ..models import Classification, EmailLabel
+from ..models import Classification, EmailLabel, PriorityLevel
 from .state import AgentState
 
 LABELS = get_args(EmailLabel)
+PRIORITIES = get_args(PriorityLevel)
 
 SYSTEM_PROMPT = (
-    "You are an email triage assistant. Read the email and assign a short "
-    f"category label (MUST BE one of: {', '.join(LABELS)}). "
+    "You are an email triage assistant. Read the email and:\n"
+    f"- assign a category label (MUST BE one of: {', '.join(LABELS)})\n"
+    f"- assign a priority (MUST BE one of: {', '.join(PRIORITIES)}); "
+    "use 'urgent' for time-sensitive or blocking issues, 'low' for purely "
+    "informational mail with no action needed, 'normal' otherwise\n"
     "Return your confidence as a number between 0 and 1 and a one-sentence reason."
 )
 

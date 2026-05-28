@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -19,9 +18,11 @@ EmailLabel = Literal[
     "other / unclear",
 ]
 
+PriorityLevel = Literal["low", "normal", "urgent"]
+
 
 class Classification(BaseModel):
-    # label: str = Field(description="Short category label, e.g. work, personal, newsletter, spam.")
     label: EmailLabel = Field(description="Short category label")
+    priority: PriorityLevel = Field(description="Triage urgency for the recipient.")
     confidence: float = Field(ge=0.0, le=1.0)
     reasoning: str = Field(default="", description="One-sentence justification.")

@@ -1,5 +1,4 @@
 import mailbox
-from datetime import UTC, datetime
 from email.message import EmailMessage
 from pathlib import Path
 
