@@ -1,0 +1,29 @@
+From: Jay Patel <j.patel@bigcustomer.com>
+To: Acme Support <support@acmecorp.com>
+Cc: Maria Reyes <m.reyes@bigcustomer.com>
+Subject: Webhooks dropping payloads intermittently
+Date: Thu, 28 May 2026 21:31:21 +0000
+Message-ID: <178000388167.525.10587713896557777220@bigcustomer.com>
+Reply-To: j.patel@bigcustomer.com
+X-Mailer: Acme Mail 4.2
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hi support,
+
+We're seeing roughly 1 in 20 webhook deliveries fail with no retry.
+Started this morning around 8am ET. Our endpoint hasn't changed in
+weeks, and we're not seeing any TLS or connectivity issues on our side.
+
+A few details that might help:
+  - Account ID: acct_8821
+  - Endpoint: https://hooks.bigcustomer.com/acme
+  - Affected event types: invoice.paid, invoice.failed
+  - Sample failed delivery ID: whk_01HXYZ123ABC
+
+Can someone take a look when you get a chance? Happy to share more
+logs if useful.
+
+Thanks,
+Jay
