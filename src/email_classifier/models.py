@@ -25,4 +25,4 @@ class Classification(BaseModel):
     label: EmailLabel = Field(description="Short category label")
     priority: PriorityLevel = Field(description="Triage urgency for the recipient.")
     confidence: float = Field(ge=0.0, le=1.0)
-    reasoning: str = Field(default="", description="One-sentence justification.")
+    reasoning: str = Field(default="", description="One- to two-sentence justification.")

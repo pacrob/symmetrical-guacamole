@@ -36,6 +36,7 @@ def main() -> None:
         c = result["classification"]
         print(f"--- {email.subject or '(no subject)'} ---")
         print(f"From:       {email.sender}")
+        print(f"Priority:   {c.priority}")
         print(f"Label:      {c.label}")
         print(f"Confidence: {c.confidence:.2f}")
         print(f"Reason:     {c.reasoning}")

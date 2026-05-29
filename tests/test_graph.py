@@ -1,3 +1,4 @@
+import re
 from typing import Any, get_args
 
 import pytest
@@ -104,3 +105,10 @@ def test_classification_rejects_unknown_priority() -> None:
             priority="critical",  # type: ignore[arg-type]
             confidence=0.5,
         )
+
+
+def test_reasoning_description_and_prompt_agree_on_sentence_length() -> None:
+    pattern = re.compile(r"one[\s-]*to[\s-]*two", re.IGNORECASE)
+    description = Classification.model_fields["reasoning"].description or ""
+    assert pattern.search(description), description
+    assert pattern.search(SYSTEM_PROMPT), SYSTEM_PROMPT

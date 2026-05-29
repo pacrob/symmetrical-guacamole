@@ -16,7 +16,8 @@ SYSTEM_PROMPT = (
     f"- assign a priority (MUST BE one of: {', '.join(PRIORITIES)}); "
     "use 'urgent' for time-sensitive or blocking issues, 'low' for purely "
     "informational mail with no action needed, 'normal' otherwise\n"
-    "Return your confidence as a number between 0 and 1 and a one-sentence reason."
+    "Return your confidence as a number between 0 and 1 and a one- to two-sentence "
+    "rationale."
 )
 
 
