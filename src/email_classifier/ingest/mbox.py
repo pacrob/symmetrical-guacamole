@@ -2,7 +2,7 @@ import mailbox
 from collections.abc import Iterator
 from datetime import datetime
 from email.message import Message
-from email.utils import getaddresses, parsedate_to_datetime
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 from ..models import Email
@@ -22,11 +22,9 @@ class MboxSource:
 
 
 def _to_email(msg: Message) -> Email:
-    to_headers = msg.get_all("To", []) + msg.get_all("Cc", [])
     return Email(
         message_id=msg.get("Message-ID", "").strip("<>"),
         sender=msg.get("From", ""),
-        recipients=[addr for _, addr in getaddresses(to_headers) if addr],
         subject=msg.get("Subject", ""),
         body=_extract_body(msg),
         received_at=_parse_date(msg.get("Date")),

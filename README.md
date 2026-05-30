@@ -107,7 +107,7 @@ Tracked against the project's functional requirements. `[x]` done, `[~]` partial
 - [x] **FR-2** — Classify into exactly one category. `EmailLabel` `Literal` + `with_structured_output` enforce the set.
 - [x] **FR-3** — Assign a priority (`low` / `normal` / `urgent`). `PriorityLevel` `Literal` + `priority` field on `Classification`; `with_structured_output` enforces the set, prompt advertises the values.
 - [x] **FR-4** — One-to-two sentence rationale. `reasoning` field on `Classification`; prompt asks for "one- to two-sentence rationale" and the field description matches.
-- [ ] **FR-5** — Emit results as structured JSON with a stable schema. The `Classification` pydantic model *is* the schema; [scripts/test_ingest.py](scripts/test_ingest.py) currently pretty-prints. Add a `--json` flag that emits `Classification.model_dump_json()` per line.
+- [x] **FR-5** — Emit results as structured JSON with a stable schema. `Classification` is the schema; [scripts/test_ingest.py](scripts/test_ingest.py) `--json [FILE]` writes a JSON array of `{message_id, label, priority, confidence, reasoning}` records (defaults to `output.json`).
 - [x] **FR-6** — Process a batch from a file in one run. (JSONL script iterates the file.)
 
 ### Should (expected if time allows)

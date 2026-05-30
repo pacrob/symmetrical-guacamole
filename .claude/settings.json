@@ -11,7 +11,8 @@
       "Bash(rg *)",
       "Bash(make lint *)",
       "Bash(make check *)",
-      "Bash(make fix *)"
+      "Bash(make fix *)",
+      "Bash(git check-ignore *)"
     ],
     "deny": [
       "Bash(git push*)",
