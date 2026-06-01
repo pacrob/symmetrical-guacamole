@@ -21,7 +21,9 @@ SYSTEM_PROMPT = (
 )
 
 
-def make_classify_node(model: BaseChatModel) -> Callable[[AgentState], dict]:
+def make_classify_node(
+    model: BaseChatModel, review_threshold: float = 0.7
+) -> Callable[[AgentState], dict]:
     structured = model.with_structured_output(Classification)
 
     def classify_node(state: AgentState) -> dict:
@@ -33,6 +35,7 @@ def make_classify_node(model: BaseChatModel) -> Callable[[AgentState], dict]:
                 HumanMessage(content=content),
             ]
         )
+        result = result.model_copy(update={"needs_review": result.confidence < review_threshold})
         return {"classification": result}
 
     return classify_node

@@ -113,7 +113,7 @@ Tracked against the project's functional requirements. `[x]` done, `[~]` partial
 ### Should (expected if time allows)
 
 - [x] **FR-7** — Junk / ambiguous bucket. `other / unclear` exists in `EmailLabel`; structured output guarantees the LLM can always pick a valid value.
-- [ ] **FR-8** — Flag low-confidence decisions for human review. Add a `review_threshold: float` to `Settings`; either set `needs_review: bool` on the classification or filter into a separate review stream at the script boundary.
+- [x] **FR-8** — Flag low-confidence decisions for human review. `review_threshold: float = 0.7` in `Settings`; classify node sets `needs_review = confidence < threshold` on `Classification`. Console output shows `[NEEDS REVIEW]` marker; JSON output includes the flag.
 
 ### Could (nice to have)
 

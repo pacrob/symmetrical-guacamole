@@ -13,6 +13,7 @@ import json
 from collections.abc import Iterator
 from pathlib import Path
 
+from email_classifier.config import get_settings
 from email_classifier.graph import build_graph
 from email_classifier.llm import get_chat_model
 from email_classifier.models import Email
@@ -40,7 +41,8 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    graph = build_graph(get_chat_model())
+    settings = get_settings()
+    graph = build_graph(get_chat_model(settings), settings.review_threshold)
 
     results: list[dict] = []
     for email in read_jsonl(args.path):
@@ -49,7 +51,8 @@ def main() -> None:
         if args.json:
             results.append({"message_id": email.message_id, **c.model_dump()})
         else:
-            print(f"--- {email.subject or '(no subject)'} ---")
+            review = "  [NEEDS REVIEW]" if c.needs_review else ""
+            print(f"--- {email.subject or '(no subject)'} ---{review}")
             print(f"From:       {email.sender}")
             print(f"Priority:   {c.priority}")
             print(f"Label:      {c.label}")

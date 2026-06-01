@@ -112,3 +112,37 @@ def test_reasoning_description_and_prompt_agree_on_sentence_length() -> None:
     description = Classification.model_fields["reasoning"].description or ""
     assert pattern.search(description), description
     assert pattern.search(SYSTEM_PROMPT), SYSTEM_PROMPT
+
+
+def test_classify_node_flags_review_for_low_confidence() -> None:
+    response = Classification(
+        label="other / unclear", priority="normal", confidence=0.3, reasoning="unclear"
+    )
+    node = make_classify_node(_FakeModel(response), review_threshold=0.7)  # type: ignore[arg-type]
+
+    update = node({"email": _email()})
+
+    assert update["classification"].needs_review is True
+
+
+def test_classify_node_does_not_flag_high_confidence() -> None:
+    response = Classification(
+        label="bug report", priority="urgent", confidence=0.95, reasoning="clear crash report"
+    )
+    node = make_classify_node(_FakeModel(response), review_threshold=0.7)  # type: ignore[arg-type]
+
+    update = node({"email": _email()})
+
+    assert update["classification"].needs_review is False
+
+
+def test_classify_node_review_threshold_is_strict_less_than() -> None:
+    """Confidence exactly equal to the threshold should NOT be flagged."""
+    response = Classification(
+        label="bug report", priority="normal", confidence=0.7, reasoning="on the line"
+    )
+    node = make_classify_node(_FakeModel(response), review_threshold=0.7)  # type: ignore[arg-type]
+
+    update = node({"email": _email()})
+
+    assert update["classification"].needs_review is False

@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     openai_api_key: SecretStr | None = None
     anthropic_api_key: SecretStr | None = None
     llm_model: str = "gpt-4o-mini"
+    review_threshold: float = 0.7
 
 
 def get_settings() -> Settings:
